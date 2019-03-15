@@ -1,9 +1,22 @@
 #include <iostream>
+#include <fstream>
 #include <complex>
+#include <vector>
 
 using namespace std;
+int width = 512, height = 512, maxval = 255;
 
-
+// Generates an evenly spaced vector over a specific interval
+// Analgous to np.linspace from Python's NumPy
+std::vector<float> linspace(float start, float end, int num_points){
+    vector<float> points;
+    float delta = (end - start);
+    float step = delta / (num_points - 1);
+    for (int i = 0; i < num_points; i++){
+        points.push_back(i*step);
+    }
+    return points;
+}
 // computes the number of iterations required to escape the mandelbrot set
 // or alternatively if the given complex number c, never satisifes the escape criteria
 // the function terminates upon executing a predefined number of iterations, maxiter.
@@ -20,11 +33,24 @@ int mandel(std::complex<double> c, int maxiter){
 }
 
 int main(){
-    std::complex<double> c1 (0.2, 0.01);
-    std::complex<double> c2 (3.2, 5.1); //outside mandlerbot set
-    int iter_1 = mandel(c1, 1000);
-    int iter_2 = mandel(c2, 1000);
-    cout << iter_1 << endl;
-    cout << iter_2 << endl;
+    std::vector<float> x_values = linspace(-0.5, 1, width);
+    std::vector<float> y_values = linspace(-2, 2, height);
+    ofstream img ("mandelbrot.ppm");
+    img << "P3" << endl;
+    img << width << " " << height << endl;
+    img << maxval << endl;
+
+    for (int y = 0; y < height; y++){
+        for (int x = 0; x < width; x++){
+            std::complex<double> c (x_values[x], y_values[y]);
+            int n = mandel(c, 1000);
+            int r = n % 255;
+            int g = n % 255;
+            int b = n % 255;
+
+            img << r << " " << g << " " << b << endl;
+        }
+    }
+    system("open mandelbrot.ppm");
     return 0;
 }

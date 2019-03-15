@@ -8,9 +8,8 @@ import matplotlib.pyplot as plt
 # for each complex number in this grid, compute the number of iterations
 # requires to reach the escape critera or max_iter in the case the complex number doesn't escpae (could be in mandelbrot)
 # plot a colour for each pixel in the atlas in accordance with iterations required for escape.
-
-x_values = np.linspace(-1.3, 1.3, 1000)
-y_values = np.linspace(-2, 1, 1000)
+x_values = np.linspace(-0.69, -0.28, 1500)
+y_values = np.linspace(-0.73, -0.45, 1500)
 
 def mandel(c, maxiter):
     z = complex(0, 0)
@@ -29,3 +28,4 @@ for x in range(len(x_values)):
 
 plt.imshow(atlas.T, interpolation="nearest", cmap="jet")
 plt.show()
+plt.savefig('mandelbrot_python.png', bbox_inches='tight')
