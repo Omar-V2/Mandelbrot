@@ -28,4 +28,3 @@ for x in range(len(x_values)):
 
 plt.imshow(atlas.T, interpolation="nearest", cmap="jet")
 plt.show()
-plt.savefig('mandelbrot_python.png', bbox_inches='tight')

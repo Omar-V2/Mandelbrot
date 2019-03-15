@@ -4,7 +4,7 @@
 #include <vector>
 
 using namespace std;
-int width = 512, height = 512, maxval = 255;
+int width = 1000, height = 1000, maxval = 255;
 
 // Generates an evenly spaced vector over a specific interval
 // Analgous to np.linspace from Python's NumPy
@@ -33,8 +33,8 @@ int mandel(std::complex<double> c, int maxiter){
 }
 
 int main(){
-    std::vector<float> x_values = linspace(-0.5, 1, width);
-    std::vector<float> y_values = linspace(-2, 2, height);
+    std::vector<float> x_values = linspace(-2.5, -2, width);
+    std::vector<float> y_values = linspace(-1, -0.5, height);
     ofstream img ("mandelbrot.ppm");
     img << "P3" << endl;
     img << width << " " << height << endl;
@@ -45,8 +45,8 @@ int main(){
             std::complex<double> c (x_values[x], y_values[y]);
             int n = mandel(c, 1000);
             int r = n % 255;
-            int g = n % 255;
-            int b = n % 255;
+            int g = 2*n % 255;
+            int b = n*g % 255;
 
             img << r << " " << g << " " << b << endl;
         }
